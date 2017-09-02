@@ -180,7 +180,6 @@ public void Load_MainWindow(){
   surface.setAlwaysOnTop(true);
   lstCom_MainWindow = new GDropList(this, 10, 10, 70, 80, 3);
   lstCom_MainWindow.setItems(lstLoading, 0);
-  lstCom_MainWindow.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   lstSelectLight_MainWindow = new GDropList(this, 10, 40, 90, 80, 3);
   lstSelectLight_MainWindow.setItems(lstLoading, 0);
   lstSelectLight_MainWindow.addEventHandler(this, "HandleDroplistEvents");
@@ -193,7 +192,6 @@ public void Load_MainWindow(){
   btnMoodMode_MainWindow.setVisible(false);
   btnConnect = new GButton(this, 10, 160, 80, 30);
   btnConnect.setText("Connect");
-  btnConnect.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   btnConnect.addEventHandler(this, "HandleButtonEvents");
   btnProfileSave = new GButton(this, 245, 40, 45, 20);
   btnProfileSave.setText("Save");
@@ -204,7 +202,6 @@ public void Load_MainWindow(){
   lblDiagText = new GLabel(this, 10, 140, 180, 110);
   lblDiagText.setTextAlign(GAlign.LEFT, GAlign.TOP);
   lblDiagText.setText("Diag Text");
-  lblDiagText.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   lblDiagText.setOpaque(false);
   //UI_Loaded = true;
   //first = true;
@@ -286,17 +283,14 @@ public void Load_WinAddPatConfig()
   lblLedDecayValA = new GLabel(winAddPatConfig, 10, 10, 80, 20);
   lblLedDecayValA.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
   lblLedDecayValA.setText("Decay Val A:");
-  lblLedDecayValA.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   lblLedDecayValA.setOpaque(false);
   lblLedDecayValB = new GLabel(winAddPatConfig, 10, 40, 80, 20);
   lblLedDecayValB.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
   lblLedDecayValB.setText("Decay Val B:");
-  lblLedDecayValB.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   lblLedDecayValB.setOpaque(false);
   lblDecayValSplit = new GLabel(winAddPatConfig, 10, 70, 80, 20);
   lblDecayValSplit.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
   lblDecayValSplit.setText("Decay Split:");
-  lblDecayValSplit.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   lblDecayValSplit.setOpaque(false);
   txbDecayValA = new GTextField(winAddPatConfig, 90, 10, 50, 20, G4P.SCROLLBARS_NONE);
   txbDecayValA.setOpaque(true);
