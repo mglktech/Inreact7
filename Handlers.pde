@@ -47,6 +47,7 @@ public void HandleButtonEvents(GButton source,GEvent event)
     SQL_Get_Light_Details(1);
     SQL_Get_Light_Details(2);
     SQL_Get_Light_Details(3);
+    CopyLightDataFromSQL();
   }
   if(source == btnProfileNew && event == GEvent.CLICKED && !winNewProfile_Loaded)
   {
@@ -128,6 +129,14 @@ public void Handle2DSliderEvents(GSlider2D source, GEvent event)
 
 public void HandleDroplistEvents(GDropList source, GEvent event)
 {
+  if(source == lstSelectLight_MainWindow && event == GEvent.SELECTED)
+  {
+    //lstPattern_PatternConfig.setItems(lstLoading, 0);
+    PullCompatiblePatterns(Lights_Product_IDs[lstSelectLight_MainWindow.getSelectedIndex()]);
+    lstPattern_PatternConfig.setItems(SelectedCompatiblePatternNames, 0);
+    
+    
+  }
   
     
   print("event");

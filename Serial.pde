@@ -39,6 +39,12 @@ void Serial_Read()
     println("Adding Light:" + Add_Light);
     SQL_Add_Light(Add_Light);
   }
+  if(Arduino_Data.substring(0,4) == "INIT")
+  {
+    
+    
+  }
+  
   
   
   

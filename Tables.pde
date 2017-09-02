@@ -4,24 +4,15 @@ Table Patterns;
 Table Lights;
 Table PatternProfiles;
 Table ColourProfiles;
+                              
+String[] Lights_ColumnNames = {"LightID","ProductID","ProductName"}; // Table of connected lights with relevant details for dropboxes
+int[] Lights_ColumnFormat = {Table.INT,Table.INT,Table.STRING};
+int[] Lights_Product_IDs;
+String[] Lights_Names;
 
-Table Bools;
-String[] Bools_ColumnNames = {"Name","Value"};
-int[] Bools_ColumnFormat = {Table.STRING,Table.INT};
-// Bools Data
-String[] Bools_RowData_Name = {"winPatternConfig_Loaded",
-                               "winColourConfig_Loaded",
-                               "Cp5UiElements_PatternConfig_Loaded",
-                               "Cp5UiElements_ColourConfig_Loaded",
-                               "winAddPatConfig_Loaded"};
-                               
-String[] Bools_RowData_Values = {"0",
-                                 "0",
-                                 "0",
-                                 "0",
-                                 "0"};
-                          
-public void AddBoolsRowData()
+int[] SelectedCompatiblePatternIDs;
+String[] SelectedCompatiblePatternNames;
+/*public void AddBoolsRowData()
 {
   for(int i=0;i<Bools_RowData_Name.length;i++)
   {
@@ -30,6 +21,50 @@ public void AddBoolsRowData()
     
   }
   
+  
+  
+}
+*/
+public void PullCompatiblePatterns(int SelectedProduct)
+{
+  println("Pulling compatible patterns for product: "+SelectedProduct);
+  int c = 0;
+  SelectedCompatiblePatternIDs = new int[50];
+  SelectedCompatiblePatternNames = new String[50];
+  db.query("SELECT * FROM PatternType JOIN PatternCompatible on PatternCompatible.Pattern_ID = PatternType.ID WHERE PatternCompatible.Product_ID ="+SelectedProduct);
+  while(db.next())
+  {
+    SelectedCompatiblePatternIDs[c] = db.getInt("Pattern_ID");
+    SelectedCompatiblePatternNames[c] = db.getString("Name");
+    c++;
+  }
+  
+  
+  
+  
+}
+
+public void CopyLightDataFromSQL()
+{
+  Lights_Product_IDs = new int[50];
+  Lights_Names = new String[50];
+  int cnt = 0;
+  db.query("SELECT * FROM Product JOIN Lights on Lights.Product_ID = Product.ID");
+  while(db.next())
+  {
+    Lights_Product_IDs[cnt] = db.getInt("Product_ID");
+    Lights_Names[cnt] = db.getString("Name");
+    cnt++;
+  }
+  if(Lights_Names.length>0)
+  {
+    lstSelectLight_MainWindow.setItems(Lights_Names, 0);
+  }
+  if(Lights_Names.length<=0)
+  {
+    Lights_Names[0] = "Ready";
+    lstSelectLight_MainWindow.setItems(Lights_Names, 0);
+  }
   
   
 }

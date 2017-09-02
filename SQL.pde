@@ -5,6 +5,9 @@ SQLite db;
 TableRow row;
 boolean db_connected;
 boolean SQL_State_Locked;
+
+
+
 public void SQL_Load()
 {
   db = new SQLite(this,"data/db.db");

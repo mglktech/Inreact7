@@ -183,7 +183,7 @@ public void Load_MainWindow(){
   lstCom_MainWindow.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   lstSelectLight_MainWindow = new GDropList(this, 10, 40, 90, 80, 3);
   lstSelectLight_MainWindow.setItems(lstLoading, 0);
-  lstSelectLight_MainWindow.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  lstSelectLight_MainWindow.addEventHandler(this, "HandleDroplistEvents");
   lstSelectProfile_MainWindow = new GDropList(this, 190, 10, 100, 80, 3);
   lstSelectProfile_MainWindow.setItems(lstLoading, 0);
   btnMoodMode_MainWindow = new GButton(this, 110, 160, 80, 30);

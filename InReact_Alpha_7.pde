@@ -63,9 +63,8 @@ public void setup(){
   Load_MainWindow();
   Load_winPatternConfig();
   Load_winColourConfig();
-  Bools = new Table();
-  CreateTable(Bools,Bools_ColumnNames,Bools_ColumnFormat);
-  AddBoolsRowData();
+  Lights = new Table();
+  CreateTable(Lights,Lights_ColumnNames,Lights_ColumnFormat);
   FillFFT();
   SQL_Load();
   // Place your setup code here
