@@ -164,3 +164,6 @@ synchronized public void SetTableVal(Table table, int tableRow, int format, Stri
   }
   
 }
+
+// Currently not being used as SQLite is being used to push and pull kept data.
+// Table functions will be used for active light profiles, as memory location lookups will be faster.
