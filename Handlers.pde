@@ -73,9 +73,15 @@ public void HandleButtonEvents(GButton source,GEvent event)
   }
   if(source == btnSave_AddPatConfig && event == GEvent.CLICKED)
   {
-    patDecayValA = int(txbDecayValA.getText());
-    patDecayValB = int(txbDecayValB.getText());
-    patDecayValSplit = int(txbDecayValSplit.getText());
+    SPPD[8]  = txbGamma_PatternConfig.getText();
+    SPPD[9]  = txbMaxX_PatternConfig.getText();
+    SPPD[10] = txbMaxY_PatternConfig.getText();
+    SPPD[11] = txbDecayValA.getText();
+    SPPD[12] = txbDecayValB.getText();
+    SPPD[13] = txbDecayValSplit.getText();
+    
+    
+    
     winAddPatConfig.close();
   }
   
@@ -132,11 +138,20 @@ public void HandleDroplistEvents(GDropList source, GEvent event)
   if(source == lstSelectLight_MainWindow && event == GEvent.SELECTED)
   {
     //lstPattern_PatternConfig.setItems(lstLoading, 0);
-    PullCompatiblePatterns(Lights_Product_IDs[lstSelectLight_MainWindow.getSelectedIndex()]);
-    lstPattern_PatternConfig.setItems(SelectedCompatiblePatternNames, 0);
-    
+    PullCompatiblePatterns(Lights_Product_IDs.get(lstSelectLight_MainWindow.getSelectedIndex()));
+    lstPattern_PatternConfig.setItems(SelectedCompatiblePatternNamesArray, 0);
+    if(PatternProfileNamesArray.length==0)
+    {
+    lstPatternProfile_PatternConfig.setItems(lstLoading, 0);
+    }
+    else if(PatternProfileNamesArray.length>0)
+    {
+      lstPatternProfile_PatternConfig.setItems(PatternProfileNamesArray, 0);
+    }
     
   }
+ 
+    
   
     
   print("event");

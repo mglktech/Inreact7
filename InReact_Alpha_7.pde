@@ -64,6 +64,7 @@ public void setup(){
   Load_winPatternConfig();
   Load_winColourConfig();
   Lights = new Table();
+  SPPD = new String[14];
   CreateTable(Lights,Lights_ColumnNames,Lights_ColumnFormat);
   FillFFT();
   SQL_Load();
@@ -80,22 +81,24 @@ public void draw(){
 
 public void SaveProfile_Pattern()
 {
-  String Name = txtProfileName_WinNewProfile.getText();
-  int PatternID = 8002; // would normally be result of query("SELECT ID FROM PatternType WHERE Name = "+lstPattern_PatternConfig.SelectedText());
-  int Bands_Min =  sliSelectBands_PatternConfig_Min;
-  int Bands_Amount = sliSelectBands_PatternConfig_Diff;
-  float MulBright = sliMul_PatternConfig.getValueXF();
-  float MulColour = sliMul_PatternConfig.getValueYF();
-  int LowPass = int(sliLowPass_PatternConfig.getValue());
-  float GammaVal = float(txbGamma_PatternConfig.getText());
-  float MaxXVal = float(txbMaxX_PatternConfig.getText());
-  float MaxYVal = float(txbMaxY_PatternConfig.getText());
-  int DecayValA = patDecayValA;
-  int DecayValB = patDecayValB;
-  int DecayValSplit = patDecayValSplit;
+  // SPPD[0] is reserved.
+  SPPD[1] = txtProfileName_WinNewProfile.getText();
+  db.query("SELECT * FROM PatternType WHERE Name = '"+lstPattern_PatternConfig.getSelectedText()+"'");
+  SPPD[2] = str(db.getInt("ID"));
+  //SPPD[3] = str(floor(range.getArrayValue(0)));
+  //SPPD[4] = str(floor(range.getArrayValue(1) - range.getArrayValue(0)));
+  SPPD[5] = sliMul_PatternConfig.getValueXS();
+  SPPD[6] = sliMul_PatternConfig.getValueYS();
+  SPPD[7] = str(int(sliLowPass_PatternConfig.getValue()));
+  //SPPD[8]  = txbGamma_PatternConfig.getText();
+  //SPPD[9]  = txbMaxX_PatternConfig.getText();
+  //SPPD[10] = txbMaxY_PatternConfig.getText();
+  //SPPD[11] = txbDecayValA.getText();
+  //SPPD[12] = txbDecayValB.getText();
+  //SPPD[13] = txbDecayValSplit.getText();
   
   println("Attempting write to DB...");
-  db.execute("INSERT INTO `PatternProfiles`(`Name`,`Pattern_ID`,`Bands_Min`,`Bands_Amount`,`MulBright`,`MulColour`,`LowPass`,`GammaVal`,`MaxXVal`,`MaxYVal`,`DecayValA`,`DecayValB`,`DecayValSplit`) VALUES ('"+Name+"',"+PatternID+","+Bands_Min+","+Bands_Amount+","+MulBright+","+MulColour+","+LowPass+","+GammaVal+","+MaxXVal+","+MaxYVal+","+DecayValA+","+DecayValB+","+DecayValSplit+");");
+  db.execute("INSERT INTO `PatternProfiles`(`Name`,`Pattern_ID`,`Bands_Min`,`Bands_Amount`,`MulBright`,`MulColour`,`LowPass`,`GammaVal`,`MaxXVal`,`MaxYVal`,`DecayValA`,`DecayValB`,`DecayValSplit`) VALUES ('"+SPPD[1]+"',"+SPPD[2]+","+SPPD[3]+","+SPPD[4]+","+SPPD[5]+","+SPPD[6]+","+SPPD[7]+","+SPPD[8]+","+SPPD[9]+","+SPPD[10]+","+SPPD[11]+","+SPPD[12]+","+SPPD[13]+");");
   
   
 }

@@ -90,7 +90,7 @@ synchronized public void loadCp5UiElements_PatternConfig(GWindow win)
   sliSelectBands_PatternConfig = cp5.addRange("sliRangeController")
              // disable broadcasting since setRange and setRangeValues will trigger an event
              .setBroadcast(false) 
-             .setPosition(10,270)
+             .setPosition(10,295)
              .setSize(400,20)
              .setHandleSize(10)
              .setRange(0,50)
@@ -107,7 +107,7 @@ synchronized public void loadCp5UiElements_PatternConfig(GWindow win)
              .setColorBackground(color(50,50,50))
              ;
    sliLowPass_PatternConfig = cp5.addSlider("sliLowPass")
-     .setPosition(415,10)
+     .setPosition(415,35)
      .setSize(10,255)
      .setRange(0,255)
      .setValue(0)
@@ -220,7 +220,7 @@ public void Load_winColourConfig() {
 
 
 public void Load_winPatternConfig() {
-  winPatternConfig = GWindow.getWindow(this, "Pattern Config", 0, 0, 550, 300, JAVA2D);
+  winPatternConfig = GWindow.getWindow(this, "Pattern Config", 0, 0, 550, 325, JAVA2D);
   winPatternConfig.noLoop();
   winPatternConfig.setActionOnClose(G4P.EXIT_APP);
   winPatternConfig.addDrawHandler(this, "winPatternConfig_draw");
@@ -232,48 +232,29 @@ public void Load_winPatternConfig() {
   sliMul_PatternConfig.setNumberFormat(G4P.DECIMAL, 2);
   sliMul_PatternConfig.setOpaque(true);
   sliMul_PatternConfig.addEventHandler(this, "Handle2DSliderEvents");
-  lstPatternProfile_PatternConfig = new GDropList(winPatternConfig, 440, 10, 100, 80, 3);
+  lstPatternProfile_PatternConfig = new GDropList(winPatternConfig, 10, 10, 100, 80, 3);
   lstPatternProfile_PatternConfig.setItems(lstLoading, 0);
   lstPatternProfile_PatternConfig.addEventHandler(this, "HandleDroplistEvents");
-  lstPattern_PatternConfig = new GDropList(winPatternConfig, 440, 160, 50, 80, 3);
+  lstPattern_PatternConfig = new GDropList(winPatternConfig, 440, 10, 100, 80, 3);
   lstPattern_PatternConfig.setItems(lstLoading, 0);
   lstPattern_PatternConfig.addEventHandler(this, "HandleDroplistEvents");
-  txbGamma_PatternConfig = new GTextField(winPatternConfig, 490, 70, 50, 20, G4P.SCROLLBARS_NONE);
-  txbGamma_PatternConfig.setOpaque(true);
-  txbGamma_PatternConfig.addEventHandler(this, "HandleTextfieldEvents");
-  txbMaxX_PatternConfig = new GTextField(winPatternConfig, 490, 100, 50, 20, G4P.SCROLLBARS_NONE);
-  txbMaxX_PatternConfig.addEventHandler(this, "HandleTextfieldEvents");
-  txbMaxX_PatternConfig.setOpaque(true);
-  txbMaxY_PatternConfig = new GTextField(winPatternConfig, 490, 130, 50, 20, G4P.SCROLLBARS_NONE);
-  
-  txbMaxY_PatternConfig.setOpaque(true);
-  txbMaxY_PatternConfig.addEventHandler(this, "HandleTextfieldEvents");
-  lblGamma_PatternConfig = new GLabel(winPatternConfig, 410, 70, 70, 20);
-  lblGamma_PatternConfig.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
-  lblGamma_PatternConfig.setText("Gamma:");
-  lblGamma_PatternConfig.setOpaque(false);
-  lblMaxX_PatternConfig = new GLabel(winPatternConfig, 410, 100, 70, 20);
-  lblMaxX_PatternConfig.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
-  lblMaxX_PatternConfig.setText("Max X:");
-  lblMaxX_PatternConfig.setOpaque(false);
-  lblMaxY_PatternConfig = new GLabel(winPatternConfig, 410, 130, 70, 20);
-  lblMaxY_PatternConfig.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
-  lblMaxY_PatternConfig.setText("Max Y:");
-  lblMaxY_PatternConfig.setOpaque(false);
-  btnSave_PatternConfig = new GButton(winPatternConfig, 495, 40, 45, 20);
+  btnSave_PatternConfig = new GButton(winPatternConfig, 115, 10, 50, 20);
   btnSave_PatternConfig.setText("Save");
-  btnAddSettings_PatternConfig = new GButton(winPatternConfig, 495, 160, 45, 20);
-  btnAddSettings_PatternConfig.setText("More");
-  btnAddSettings_PatternConfig.addEventHandler(this, "HandleButtonEvents");
-  btnNewProfile_PatternConfig = new GButton(winPatternConfig, 440, 40, 45, 20);
+  btnNewProfile_PatternConfig = new GButton(winPatternConfig, 170, 10, 50, 20);
   btnNewProfile_PatternConfig.setText("New");
   btnNewProfile_PatternConfig.addEventHandler(this, "HandleButtonEvents");
+  btnClear_PatternConfig = new GButton(winPatternConfig, 225, 10, 50, 20);
+  btnClear_PatternConfig.setText("Clear");
+  btnClear_PatternConfig.addEventHandler(this, "HandleButtonEvents");
+  btnAddSettings_PatternConfig = new GButton(winPatternConfig, 440, 35, 100, 20);
+  btnAddSettings_PatternConfig.setText("More Settings");
+  btnAddSettings_PatternConfig.addEventHandler(this, "HandleButtonEvents");
   winPatternConfig.loop();
 }
 
 public void Load_WinAddPatConfig()
 {
-  winAddPatConfig = GWindow.getWindow(this, "Additional Settings", 0, 0, 240, 120, JAVA2D);
+  winAddPatConfig = GWindow.getWindow(this, "Additional Settings", 0, 0, 240, 240, JAVA2D);
   winAddPatConfig.noLoop();
   winAddPatConfig.setActionOnClose(G4P.CLOSE_WINDOW);
   winAddPatConfig.addDrawHandler(this, "winAddPatConfig_draw");
@@ -298,7 +279,28 @@ public void Load_WinAddPatConfig()
   txbDecayValB.setOpaque(true);
   txbDecayValSplit = new GTextField(winAddPatConfig, 90, 70, 50, 20, G4P.SCROLLBARS_NONE);
   txbDecayValSplit.setOpaque(true);
-  btnSave_AddPatConfig = new GButton(winAddPatConfig, 190, 90, 45, 20);
+  txbGamma_PatternConfig = new GTextField(winAddPatConfig, 90, 100, 50, 20, G4P.SCROLLBARS_NONE);
+  txbGamma_PatternConfig.setOpaque(true);
+  txbGamma_PatternConfig.addEventHandler(this, "HandleTextfieldEvents");
+  txbMaxX_PatternConfig = new GTextField(winAddPatConfig, 90, 130, 50, 20, G4P.SCROLLBARS_NONE);
+  txbMaxX_PatternConfig.addEventHandler(this, "HandleTextfieldEvents");
+  txbMaxX_PatternConfig.setOpaque(true);
+  txbMaxY_PatternConfig = new GTextField(winAddPatConfig, 90, 160, 50, 20, G4P.SCROLLBARS_NONE);
+  txbMaxY_PatternConfig.setOpaque(true);
+  txbMaxY_PatternConfig.addEventHandler(this, "HandleTextfieldEvents");
+  lblGamma_PatternConfig = new GLabel(winAddPatConfig, 10, 100, 70, 20);
+  lblGamma_PatternConfig.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
+  lblGamma_PatternConfig.setText("Gamma:");
+  lblGamma_PatternConfig.setOpaque(false);
+  lblMaxX_PatternConfig = new GLabel(winAddPatConfig, 10, 130, 70, 20);
+  lblMaxX_PatternConfig.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
+  lblMaxX_PatternConfig.setText("Max X:");
+  lblMaxX_PatternConfig.setOpaque(false);
+  lblMaxY_PatternConfig = new GLabel(winAddPatConfig, 10, 160, 70, 20);
+  lblMaxY_PatternConfig.setTextAlign(GAlign.RIGHT, GAlign.MIDDLE);
+  lblMaxY_PatternConfig.setText("Max Y:");
+  lblMaxY_PatternConfig.setOpaque(false);
+  btnSave_AddPatConfig = new GButton(winAddPatConfig, 190, 210, 45, 20);
   btnSave_AddPatConfig.setText("Save");
   btnSave_AddPatConfig.addEventHandler(this, "HandleButtonEvents");
   winAddPatConfig.loop();
@@ -354,6 +356,7 @@ GLabel lblMaxY_PatternConfig;
 GButton btnSave_PatternConfig; 
 GButton btnAddSettings_PatternConfig;
 GButton btnNewProfile_PatternConfig;
+GButton btnClear_PatternConfig;
 
 GWindow winAddPatConfig;
 GLabel lblLedDecayValA; 

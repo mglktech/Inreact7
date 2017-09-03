@@ -7,11 +7,21 @@ Table ColourProfiles;
                               
 String[] Lights_ColumnNames = {"LightID","ProductID","ProductName"}; // Table of connected lights with relevant details for dropboxes
 int[] Lights_ColumnFormat = {Table.INT,Table.INT,Table.STRING};
-int[] Lights_Product_IDs;
-String[] Lights_Names;
+IntList Lights_Product_IDs;
+StringList Lights_Names;
+String[] Lights_NamesArray;
 
-int[] SelectedCompatiblePatternIDs;
-String[] SelectedCompatiblePatternNames;
+IntList PatternProfileIDs;
+StringList PatternProfileNames;
+String[] PatternProfileNamesArray;
+
+IntList SelectedCompatiblePatternIDs;
+StringList SelectedCompatiblePatternNames;
+String[] SelectedCompatiblePatternNamesArray;
+
+String[] SPPD; // SelectedPatternProfileDetails
+
+
 /*public void AddBoolsRowData()
 {
   for(int i=0;i<Bools_RowData_Name.length;i++)
@@ -28,42 +38,76 @@ String[] SelectedCompatiblePatternNames;
 public void PullCompatiblePatterns(int SelectedProduct)
 {
   println("Pulling compatible patterns for product: "+SelectedProduct);
-  int c = 0;
-  SelectedCompatiblePatternIDs = new int[50];
-  SelectedCompatiblePatternNames = new String[50];
+  SelectedCompatiblePatternIDs = new IntList();
+  SelectedCompatiblePatternNames = new StringList();
+  PatternProfileIDs = new IntList();
+  PatternProfileNames = new StringList();
   db.query("SELECT * FROM PatternType JOIN PatternCompatible on PatternCompatible.Pattern_ID = PatternType.ID WHERE PatternCompatible.Product_ID ="+SelectedProduct);
   while(db.next())
   {
-    SelectedCompatiblePatternIDs[c] = db.getInt("Pattern_ID");
-    SelectedCompatiblePatternNames[c] = db.getString("Name");
-    c++;
+    SelectedCompatiblePatternIDs.append(db.getInt("Pattern_ID"));
+    SelectedCompatiblePatternNames.append(db.getString("Name"));
+    
+    
   }
+  for(int i=0;i<SelectedCompatiblePatternIDs.size();i++)
+  {
+    db.query("SELECT * FROM PatternProfiles WHERE Pattern_ID = "+SelectedCompatiblePatternIDs.get(i));
+    while(db.next())
+    {
+      PatternProfileIDs.append(db.getInt("ID"));
+      PatternProfileNames.append(db.getString("Name"));
+      print("Found PatProfile: "+db.getString("Name"));
+    }
+    
+  }
+  SelectedCompatiblePatternNamesArray = CreateStringArrayFromList(SelectedCompatiblePatternNames);
+  PatternProfileNamesArray = CreateStringArrayFromList(PatternProfileNames);
   
   
   
   
 }
 
+public String[] CreateStringArrayFromList(StringList list)
+{
+  int size = list.size();
+  String[] rtn = new String[size];
+  
+  for(int i=0;i<size;i++)
+  {
+    rtn[i] = list.get(i);
+  }
+  
+  
+  
+  return rtn;
+  
+}
+
+
 public void CopyLightDataFromSQL()
 {
-  Lights_Product_IDs = new int[50];
-  Lights_Names = new String[50];
+  Lights_Product_IDs = new IntList();
+  Lights_Names = new StringList();
   int cnt = 0;
   db.query("SELECT * FROM Product JOIN Lights on Lights.Product_ID = Product.ID");
   while(db.next())
   {
-    Lights_Product_IDs[cnt] = db.getInt("Product_ID");
-    Lights_Names[cnt] = db.getString("Name");
+    Lights_Product_IDs.append(db.getInt("Product_ID"));
+    Lights_Names.append(db.getString("Name"));
     cnt++;
   }
-  if(Lights_Names.length>0)
+  Lights_NamesArray = CreateStringArrayFromList(Lights_Names);
+  if(Lights_Names.size()>0)
   {
-    lstSelectLight_MainWindow.setItems(Lights_Names, 0);
+    
+    lstSelectLight_MainWindow.setItems(Lights_NamesArray, 0);
   }
-  if(Lights_Names.length<=0)
+  if(Lights_Names.size()<=0)
   {
-    Lights_Names[0] = "Ready";
-    lstSelectLight_MainWindow.setItems(Lights_Names, 0);
+    Lights_NamesArray[0] = "Ready";
+    lstSelectLight_MainWindow.setItems(Lights_NamesArray, 0);
   }
   
   

@@ -40,9 +40,8 @@ public void UpdateUIElements(GWindow win)
   {
     if(win.mousePressed)
     {
-    sliSelectBands_PatternConfig_Min = floor(range.getArrayValue(0));
-    sliSelectBands_PatternConfig_Max = floor(range.getArrayValue(1));
-    sliSelectBands_PatternConfig_Diff = floor(range.getArrayValue(1) - range.getArrayValue(0));
+    SPPD[3] = str(floor(range.getArrayValue(0)));
+    SPPD[4] = str(floor(range.getArrayValue(1) - range.getArrayValue(0)));
     //println("Min: "+sliSelectBands_PatternConfig_Min+" Max: "+sliSelectBands_PatternConfig_Max+" Diff: "+sliSelectBands_PatternConfig_Diff);
     //println("Actual: "+range.getArrayValue(0)+":"+range.getArrayValue(1));
     }
@@ -82,8 +81,10 @@ public void UpdateUIElements(GWindow win)
 
 public void DrawSpectrum(GWindow win)
 {
+  Range range = sliSelectBands_PatternConfig;
   win.fill(50,50,50);
-  win.rect(10,10,400,255);
+  win.noStroke();
+  win.rect(10,35,400,255);
   // fill FFT test data
   win.fill(50,200,50);
   for(int i=0;i<50;i++)
@@ -93,11 +94,11 @@ public void DrawSpectrum(GWindow win)
     {
       fftTestData[i] = 255;
     }
-    if(InRange(i,sliSelectBands_PatternConfig_Min,sliSelectBands_PatternConfig_Min+sliSelectBands_PatternConfig_Diff))
+    if(InRange(i,floor(range.getArrayValue(0)),floor(range.getArrayValue(0))+floor(range.getArrayValue(1) - range.getArrayValue(0))))
     {
       win.fill(50,200,50);
     }
-    win.rect(10+i*8,265,8,-fftTestData[i]);
+    win.rect(10+i*8,290,8,-fftTestData[i]);
     
   }
  
@@ -108,7 +109,7 @@ public void DrawSpectrum(GWindow win)
    if(i % 8 == 0)
    {
     
-    win.line(10+i,10,10+i,265);
+    win.line(10+i,35,10+i,290);
    
    }
     
@@ -119,7 +120,7 @@ public void DrawSpectrum(GWindow win)
   {
     if(i % 50 == 0)
     {
-      win.line(10,15+i,410,15+i);
+      win.line(10,35+i,410,35+i);
       
     }
     
