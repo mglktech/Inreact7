@@ -98,10 +98,73 @@ public void SaveProfile_Pattern()
   //SPPD[13] = txbDecayValSplit.getText();
   
   println("Attempting write to DB...");
-  db.execute("INSERT INTO `PatternProfiles`(`Name`,`Pattern_ID`,`Bands_Min`,`Bands_Amount`,`MulBright`,`MulColour`,`LowPass`,`GammaVal`,`MaxXVal`,`MaxYVal`,`DecayValA`,`DecayValB`,`DecayValSplit`) VALUES ('"+SPPD[1]+"',"+SPPD[2]+","+SPPD[3]+","+SPPD[4]+","+SPPD[5]+","+SPPD[6]+","+SPPD[7]+","+SPPD[8]+","+SPPD[9]+","+SPPD[10]+","+SPPD[11]+","+SPPD[12]+","+SPPD[13]+");");
+  db.query("SELECT Count(*) AS count from PatternProfiles where PatternProfiles.Name = '"+SPPD[1]+"';");
+  if(db.getInt("count") == 0)
+  {
+    db.execute("INSERT INTO `PatternProfiles`(`Name`,`Pattern_ID`,`Bands_Min`,`Bands_Amount`,`MulBright`,`MulColour`,`LowPass`,`GammaVal`,`MaxXVal`,`MaxYVal`,`DecayValA`,`DecayValB`,`DecayValSplit`) VALUES ('"+SPPD[1]+"',"+SPPD[2]+","+SPPD[3]+","+SPPD[4]+","+SPPD[5]+","+SPPD[6]+","+SPPD[7]+","+SPPD[8]+","+SPPD[9]+","+SPPD[10]+","+SPPD[11]+","+SPPD[12]+","+SPPD[13]+");");
+    println("Executed INSERT");
+  }
+  else if(db.getInt("count") == 1)
+  {
+  db.execute("UPDATE `PatternProfiles` SET Pattern_ID ="+SPPD[2]+",Bands_Min = "+SPPD[3]+",Bands_Amount = "+SPPD[4]+", MulBright = "+SPPD[5]+",MulColour = "+SPPD[6]+", LowPass = "+SPPD[7]+", GammaVal = "+SPPD[8]+", MaxXVal = "+SPPD[9]+", MaxYVal = "+SPPD[10]+", DecayValA = "+SPPD[11]+", DecayValB = "+SPPD[12]+", DecayValSplit = "+SPPD[13]+" WHERE Name='"+SPPD[1]+"';");
+  println("Executed UPDATE");
+  }
+ 
+    
+  
+  
+    
+  
+}
+public void LoadProfileToArray_Pattern()
+{
+  db.query("SELECT * FROM PatternProfiles WHERE Name = '"+lstPatternProfile_PatternConfig.getSelectedText()+"';");
+  println("Loading profile "+lstPatternProfile_PatternConfig.getSelectedText());
+  SPPD[1] = db.getString("Name");
+  SPPD[2] = str(db.getInt("Pattern_ID"));
+  SPPD[3] = str(db.getInt("Bands_Min"));
+  SPPD[4] = str(db.getInt("Bands_Amount"));
+  SPPD[5] = str(db.getFloat("MulBright"));
+  SPPD[6] = str(db.getFloat("MulColour"));
+  SPPD[7] = str(db.getInt("LowPass"));
+  SPPD[8] = str(db.getFloat("GammaVal"));
+  SPPD[9] = str(db.getFloat("MaxXVal"));
+  SPPD[10] = str(db.getFloat("MaxYVal"));
+  SPPD[11] = str(db.getInt("DecayValA"));
+  SPPD[12] = str(db.getInt("DecayValB"));
+  SPPD[13] = str(db.getInt("DecayValSplit"));
+
+}
+public void UpdateUIFromArray_Pattern()
+{
+  println("Updating UI...");
+  Range range = sliSelectBands_PatternConfig;
+  Slider lowpass = sliLowPass_PatternConfig;
+  range.setArrayValue(0,float(SPPD[3]));
+  range.setArrayValue(1,float(SPPD[4]) - float(SPPD[3]));
+  lowpass.setValue(float(SPPD[7]));
+  sliMul_PatternConfig.setValueX(float(SPPD[5]));
+  sliMul_PatternConfig.setValueY(float(SPPD[6]));
+  db.query("SELECT * FROM PatternType");
+  int cnt = 0;
+  boolean finished = false;
+  while(db.next())
+  {
+    if(db.getString("Name") == SPPD[1])
+    {
+      finished = true;
+    }
+    if(finished == false)
+    {
+    cnt++;
+    }
+  }
+  
+  lstPattern_PatternConfig.setSelected(cnt-1);
   
   
 }
+
 
 
 // Use this method to add additional statements

@@ -150,8 +150,16 @@ public void HandleDroplistEvents(GDropList source, GEvent event)
     }
     
   }
+  if(source == lstPatternProfile_PatternConfig && event == GEvent.SELECTED)
+  {
+    if(lstPatternProfile_PatternConfig.getSelectedText() != "loading...")
+    {
+      
+    LoadProfileToArray_Pattern();
+    UpdateUIFromArray_Pattern();
+    }
  
-    
+  }
   
     
   print("event");

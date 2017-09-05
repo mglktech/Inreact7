@@ -22,6 +22,7 @@ synchronized public void winAddPatConfig_draw(PApplet appc, GWinData data) { //_
   
   
   
+  
 }
 
 public void winAddPatConfig_OnClose(GWindow window) { 
@@ -303,6 +304,13 @@ public void Load_WinAddPatConfig()
   btnSave_AddPatConfig = new GButton(winAddPatConfig, 190, 210, 45, 20);
   btnSave_AddPatConfig.setText("Save");
   btnSave_AddPatConfig.addEventHandler(this, "HandleButtonEvents");
+  txbGamma_PatternConfig.setText(SPPD[8]);
+  txbMaxX_PatternConfig.setText(SPPD[9]);
+  txbMaxY_PatternConfig.setText(SPPD[10]);
+  txbDecayValA.setText(SPPD[11]);
+  txbDecayValB.setText(SPPD[12]);
+  txbDecayValSplit.setText(SPPD[13]);
+  
   winAddPatConfig.loop();
   
   
