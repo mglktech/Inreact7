@@ -84,6 +84,10 @@ public void HandleButtonEvents(GButton source,GEvent event)
     
     winAddPatConfig.close();
   }
+  if(source == btnProfileSave && event == GEvent.CLICKED)
+  {
+    SaveProfile_Pattern();
+  }
   
   
   
