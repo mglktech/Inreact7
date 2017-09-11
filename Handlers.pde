@@ -18,6 +18,12 @@ public Boolean toBool(int i)
 
 public void HandleButtonEvents(GButton source,GEvent event)
 {
+  if(source == btnSave_PatternConfig && event == GEvent.CLICKED)
+  {
+    println("Attempting to save Pattern...");
+    SaveProfile_Pattern();
+  }
+  
   if(source == btnAddSettings_PatternConfig && event == GEvent.CLICKED)
   {
     if(!winAddPatConfig_Loaded)
@@ -84,10 +90,7 @@ public void HandleButtonEvents(GButton source,GEvent event)
     
     winAddPatConfig.close();
   }
-  if(source == btnProfileSave && event == GEvent.CLICKED)
-  {
-    SaveProfile_Pattern();
-  }
+  
   
   
   

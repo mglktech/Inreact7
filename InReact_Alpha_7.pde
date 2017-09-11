@@ -82,7 +82,8 @@ public void draw(){
 public void SaveProfile_Pattern()
 {
   // SPPD[0] is reserved.
-  SPPD[1] = txtProfileName_WinNewProfile.getText();
+  SPPD[1] = lstPatternProfile_PatternConfig.getSelectedText();
+  println("Saving profile "+lstPatternProfile_PatternConfig.getSelectedText());
   db.query("SELECT * FROM PatternType WHERE Name = '"+lstPattern_PatternConfig.getSelectedText()+"'");
   SPPD[2] = str(db.getInt("ID"));
   //SPPD[3] = str(floor(range.getArrayValue(0)));
@@ -140,8 +141,10 @@ public void UpdateUIFromArray_Pattern()
   println("Updating UI...");
   Range range = sliSelectBands_PatternConfig;
   Slider lowpass = sliLowPass_PatternConfig;
-  range.setArrayValue(0,float(SPPD[3]));
-  range.setArrayValue(1,float(SPPD[4]) - float(SPPD[3]));
+  //range.setArrayValue(0,float(SPPD[3]));
+  //range.setArrayValue(1,float(SPPD[4]) - float(SPPD[3]));
+  range.setLowValue(float(SPPD[3]));
+  range.setHighValue(float(SPPD[4]) + float(SPPD[3]));
   lowpass.setValue(float(SPPD[7]));
   sliMul_PatternConfig.setValueX(float(SPPD[5]));
   sliMul_PatternConfig.setValueY(float(SPPD[6]));

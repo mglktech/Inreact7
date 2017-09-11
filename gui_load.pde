@@ -169,6 +169,19 @@ synchronized public void loadCp5UiElements_PatternConfig(GWindow win)
   
 }
 
+void controlEvent(ControlEvent theControlEvent) {
+  
+  if(theControlEvent.isFrom("sliRangeController"))
+  {
+    
+    SPPD[3] = str(floor(theControlEvent.getController().getArrayValue(0)));
+    SPPD[4] = str(floor(theControlEvent.getController().getArrayValue(1) - theControlEvent.getController().getArrayValue(0)));
+  }
+  
+  
+  
+}
+
 
 
 
@@ -241,6 +254,7 @@ public void Load_winPatternConfig() {
   lstPattern_PatternConfig.addEventHandler(this, "HandleDroplistEvents");
   btnSave_PatternConfig = new GButton(winPatternConfig, 115, 10, 50, 20);
   btnSave_PatternConfig.setText("Save");
+  btnSave_PatternConfig.addEventHandler(this, "HandleButtonEvents");
   btnNewProfile_PatternConfig = new GButton(winPatternConfig, 170, 10, 50, 20);
   btnNewProfile_PatternConfig.setText("New");
   btnNewProfile_PatternConfig.addEventHandler(this, "HandleButtonEvents");
