@@ -60,6 +60,7 @@ public void setup(){
  
   size(300, 200, JAVA2D);
   background(25);
+  
   Load_MainWindow();
   Load_winPatternConfig();
   Load_winColourConfig();

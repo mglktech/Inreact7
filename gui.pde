@@ -15,36 +15,36 @@
 // */
 
 //public void HandleButtonEvents(GButton source, GEvent event) { //_CODE_:btnMoodMode_MainWindow:539411:
-//////  println("btnMoodMode_MainWindow - GButton >> GEvent." + event + " @ " + millis());
-//////} //_CODE_:btnMoodMode_MainWindow:539411:
+////////  println("btnMoodMode_MainWindow - GButton >> GEvent." + event + " @ " + millis());
+////////} //_CODE_:btnMoodMode_MainWindow:539411:
 
 //synchronized public void winColourConfig_draw(PApplet appc, GWinData data) { //_CODE_:winColourConfig:641755:
-//////  appc.background(230);
-//////} //_CODE_:winColourConfig:641755:
+////////  appc.background(230);
+////////} //_CODE_:winColourConfig:641755:
 
 //synchronized public void winPatternConfig_draw(PApplet appc, GWinData data) { //_CODE_:winPatternConfig:566842:
-//////  appc.background(230);
-//////} //_CODE_:winPatternConfig:566842:
+////////  appc.background(230);
+////////} //_CODE_:winPatternConfig:566842:
 
 //public void HandleTextboxEvents(GTextField source, GEvent event) { //_CODE_:txbMaxY:390577:
-//////  println("textfield2 - GTextField >> GEvent." + event + " @ " + millis());
-//////} //_CODE_:txbMaxY:390577:
+////////  println("textfield2 - GTextField >> GEvent." + event + " @ " + millis());
+////////} //_CODE_:txbMaxY:390577:
 
 //synchronized public void winAddPatConfig_draw(PApplet appc, GWinData data) { //_CODE_:winAddPatConfig:417507:
-//////  appc.background(230);
-//////} //_CODE_:winAddPatConfig:417507:
+////////  appc.background(230);
+////////} //_CODE_:winAddPatConfig:417507:
 
 //public void winAddPatConfig_OnClose(GWindow window) { //_CODE_:winAddPatConfig:884444:
-//////  println("winAddPatConfig - window closed at " + millis());
-//////} //_CODE_:winAddPatConfig:884444:
+////////  println("winAddPatConfig - window closed at " + millis());
+////////} //_CODE_:winAddPatConfig:884444:
 
 //synchronized public void winNewProfile_draw(PApplet appc, GWinData data) { //_CODE_:winNewProfile:260299:
-//////  appc.background(230);
-//////} //_CODE_:winNewProfile:260299:
+////////  appc.background(230);
+////////} //_CODE_:winNewProfile:260299:
 
 //public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:278177:
-//////  println("button1 - GButton >> GEvent." + event + " @ " + millis());
-//////} //_CODE_:button1:278177:
+////////  println("button1 - GButton >> GEvent." + event + " @ " + millis());
+////////} //_CODE_:button1:278177:
 
 
 

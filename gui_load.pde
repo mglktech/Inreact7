@@ -107,6 +107,8 @@ synchronized public void loadCp5UiElements_PatternConfig(GWindow win)
              .setColorForeground(color(100,100,100))
              .setColorBackground(color(50,50,50))
              ;
+   SPPD[3] = "20";
+   SPPD[4] = "40";
    sliLowPass_PatternConfig = cp5.addSlider("sliLowPass")
      .setPosition(415,35)
      .setSize(10,255)
@@ -135,8 +137,8 @@ synchronized public void loadCp5UiElements_PatternConfig(GWindow win)
                .setAngleRange(TWO_PI)
                .setStartAngle(HALF_PI)
                .setValue(75)
-               .setPosition(10,10)
-               .setRadius(50)
+               .setPosition(10,45)
+               .setRadius(75)
                .setNumberOfTickMarks(0)
                .setTickMarkLength(0)
                .snapToTickMarks(false)
@@ -151,8 +153,8 @@ synchronized public void loadCp5UiElements_PatternConfig(GWindow win)
                ;
     
     sliSat_ColourConfig = cp5.addSlider("sliSat")
-     .setPosition(120,10)
-     .setSize(10,100)
+     .setPosition(165,45)
+     .setSize(20,150)
      .setRange(0,255)
      .setValue(0)
      .setDecimalPrecision(0)
@@ -222,12 +224,29 @@ public void Load_MainWindow(){
 }
 
 public void Load_winColourConfig() {
-  winColourConfig = GWindow.getWindow(this, "Colour Config", 0, 0, 240, 120, JAVA2D);
+  winColourConfig = GWindow.getWindow(this, "Colour Config", 0, 0, 440, 200, JAVA2D);
   winColourConfig.noLoop();
   winColourConfig.setActionOnClose(G4P.EXIT_APP);
   winColourConfig.addDrawHandler(this, "winColourConfig_draw");
   winColourConfig.addMouseHandler(this,"HandleMouseEvents");
   winColourConfig.setAlwaysOnTop(true);
+  
+  lstPatternProfile_ColourConfig = new GDropList(winColourConfig, 10, 10, 100, 80, 3);
+  lstPatternProfile_ColourConfig.setItems(lstLoading, 0);
+  lstPatternProfile_ColourConfig.addEventHandler(this, "HandleDroplistEvents");
+  lstPattern_ColourConfig = new GDropList(winColourConfig, 330, 10, 100, 80, 3);
+  lstPattern_ColourConfig.setItems(lstLoading, 0);
+  lstPattern_ColourConfig.addEventHandler(this, "HandleDroplistEvents");
+  btnSave_ColourConfig = new GButton(winColourConfig, 115, 10, 50, 20);
+  btnSave_ColourConfig.setText("Save");
+  btnSave_ColourConfig.addEventHandler(this, "HandleButtonEvents");
+  btnNewProfile_ColourConfig = new GButton(winColourConfig, 170, 10, 50, 20);
+  btnNewProfile_ColourConfig.setText("New");
+  btnNewProfile_ColourConfig.addEventHandler(this, "HandleButtonEvents");
+  btnClear_ColourConfig = new GButton(winColourConfig, 225, 10, 50, 20);
+  btnClear_ColourConfig.setText("Clear");
+  btnClear_ColourConfig.addEventHandler(this, "HandleButtonEvents");
+  
   winColourConfig.loop();
   
 }
@@ -388,6 +407,13 @@ GTextField txbDecayValA;
 GTextField txbDecayValB; 
 GTextField txbDecayValSplit;
 GButton btnSave_AddPatConfig;
+
+GDropList lstPatternProfile_ColourConfig;
+GDropList lstPattern_ColourConfig;
+GButton btnSave_ColourConfig;
+GButton btnNewProfile_ColourConfig;
+GButton btnClear_ColourConfig;
+
 
 GWindow winNewProfile;
 GTextField txtProfileName_WinNewProfile; 

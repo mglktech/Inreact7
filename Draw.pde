@@ -41,7 +41,7 @@ public void UpdateUIElements(GWindow win)
     if(win.mousePressed)
     {
     SPPD[3] = str(floor(range.getArrayValue(0)));
-    SPPD[4] = str(floor(range.getArrayValue(1) - range.getArrayValue(0)));
+    SPPD[4] = str(floor(range.getArrayValue(1)));
     //println("Min: "+sliSelectBands_PatternConfig_Min+" Max: "+sliSelectBands_PatternConfig_Max+" Diff: "+sliSelectBands_PatternConfig_Diff);
     //println("Actual: "+range.getArrayValue(0)+":"+range.getArrayValue(1));
     }
@@ -94,7 +94,7 @@ public void DrawSpectrum(GWindow win)
     {
       fftTestData[i] = 255;
     }
-    if(InRange(i,floor(range.getArrayValue(0)),floor(range.getArrayValue(0))+floor(range.getArrayValue(1) - range.getArrayValue(0))))
+    if(InRange(i,int(SPPD[3]),int(SPPD[4])))
     {
       win.fill(50,200,50);
     }
