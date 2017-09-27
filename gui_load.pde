@@ -231,12 +231,12 @@ public void Load_winColourConfig() {
   winColourConfig.addMouseHandler(this,"HandleMouseEvents");
   winColourConfig.setAlwaysOnTop(true);
   
-  lstPatternProfile_ColourConfig = new GDropList(winColourConfig, 10, 10, 100, 80, 3);
-  lstPatternProfile_ColourConfig.setItems(lstLoading, 0);
-  lstPatternProfile_ColourConfig.addEventHandler(this, "HandleDroplistEvents");
-  lstPattern_ColourConfig = new GDropList(winColourConfig, 330, 10, 100, 80, 3);
-  lstPattern_ColourConfig.setItems(lstLoading, 0);
-  lstPattern_ColourConfig.addEventHandler(this, "HandleDroplistEvents");
+  lstColourProfile_ColourConfig = new GDropList(winColourConfig, 10, 10, 100, 80, 3);
+  lstColourProfile_ColourConfig.setItems(lstLoading, 0);
+  lstColourProfile_ColourConfig.addEventHandler(this, "HandleDroplistEvents");
+  lstColour_ColourConfig = new GDropList(winColourConfig, 330, 10, 100, 80, 3);
+  lstColour_ColourConfig.setItems(lstLoading, 0);
+  lstColour_ColourConfig.addEventHandler(this, "HandleDroplistEvents");
   btnSave_ColourConfig = new GButton(winColourConfig, 115, 10, 50, 20);
   btnSave_ColourConfig.setText("Save");
   btnSave_ColourConfig.addEventHandler(this, "HandleButtonEvents");
@@ -408,8 +408,8 @@ GTextField txbDecayValB;
 GTextField txbDecayValSplit;
 GButton btnSave_AddPatConfig;
 
-GDropList lstPatternProfile_ColourConfig;
-GDropList lstPattern_ColourConfig;
+GDropList lstColourProfile_ColourConfig;
+GDropList lstColour_ColourConfig;
 GButton btnSave_ColourConfig;
 GButton btnNewProfile_ColourConfig;
 GButton btnClear_ColourConfig;

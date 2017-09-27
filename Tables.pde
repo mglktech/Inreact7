@@ -2,25 +2,22 @@ Table Products;
 Table Compatible;
 Table Patterns;
 Table Lights;
-Table PatternProfiles;
-Table ColourProfiles;
+Table LightProfiles;
+Table InstanceLightData;
+Table InstanceDroplistData;
+
+
+String[] LightProfiles_ColumnNames = {"Light_Profile_ID","Light_ID","Pattern_Profile_ID","Colour_Profile_ID","ProfileName"};
+int[]    LightProfiles_ColumnFormat = {Table.INT,Table.INT,Table.INT,Table.INT,Table.STRING}; // Backend for Active Profiles
                               
 String[] Lights_ColumnNames = {"LightID","ProductID","ProductName"}; // Table of connected lights with relevant details for dropboxes
 int[] Lights_ColumnFormat = {Table.INT,Table.INT,Table.STRING};
-IntList Lights_Product_IDs;
-StringList Lights_Names;
-String[] Lights_NamesArray;
 
-IntList PatternProfileIDs;
-StringList PatternProfileNames;
-String[] PatternProfileNamesArray;
+String[] InstanceLightData_ColumnNames = {"LightID","Product_ID","Bands_Min","Bands_Amount","MulBright","MulColour","LowPass","GammaVal","MaxXVal","MaxYVal","DecayValA","DecayValB","DecayValSplit","Colour_DataA","Colour_DataB","Colour_DataC","Colour_DataD"};
+int[]    InstanceLightData_ColumnFormat = {Table.INT,Table.INT,Table.INT,Table.INT,Table.FLOAT,Table.FLOAT,Table.INT,Table.FLOAT,Table.FLOAT,Table.FLOAT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT};
 
-IntList SelectedCompatiblePatternIDs;
-StringList SelectedCompatiblePatternNames;
-String[] SelectedCompatiblePatternNamesArray;
-
-String[] SPPD; // SelectedPatternProfileDetails
-
+String[] InstanceDroplistData_ColumnNames = {"LightID","lstSelectProfile_Index","lstPattern_Index","lstPatternProfile_Index","lstColourProfile_Index","lstColour_Index"};
+int[] InstanceDroplistData_ColumnFormat = {Table.INT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT};
 
 /*public void AddBoolsRowData()
 {
@@ -35,93 +32,45 @@ String[] SPPD; // SelectedPatternProfileDetails
   
 }
 */
-public void PullCompatiblePatterns(int SelectedProduct)
+public void ConstructTables()
 {
-  println("Pulling compatible patterns for product: "+SelectedProduct);
-  SelectedCompatiblePatternIDs = new IntList();
-  SelectedCompatiblePatternNames = new StringList();
-  PatternProfileIDs = new IntList();
-  PatternProfileNames = new StringList();
-  db.query("SELECT * FROM PatternType JOIN PatternCompatible on PatternCompatible.Pattern_ID = PatternType.ID WHERE PatternCompatible.Product_ID ="+SelectedProduct);
-  while(db.next())
-  {
-    SelectedCompatiblePatternIDs.append(db.getInt("Pattern_ID"));
-    SelectedCompatiblePatternNames.append(db.getString("Name"));
-    
-    
-  }
-  for(int i=0;i<SelectedCompatiblePatternIDs.size();i++)
-  {
-    db.query("SELECT * FROM PatternProfiles WHERE Pattern_ID = "+SelectedCompatiblePatternIDs.get(i));
-    while(db.next())
-    {
-      PatternProfileIDs.append(db.getInt("ID"));
-      PatternProfileNames.append(db.getString("Name"));
-      print("Found PatProfile: "+db.getString("Name"));
-    }
-    
-  }
-  SelectedCompatiblePatternNamesArray = CreateStringArrayFromList(SelectedCompatiblePatternNames);
-  PatternProfileNamesArray = CreateStringArrayFromList(PatternProfileNames);
+  LightProfiles = new Table();
+  Lights = new Table();
+  InstanceLightData = new Table();
+  InstanceDroplistData = new Table();
+  CreateTable(Lights,Lights_ColumnNames,Lights_ColumnFormat);
+  println("Table Lights Created!");
+  CreateTable(LightProfiles,LightProfiles_ColumnNames,LightProfiles_ColumnFormat);
+  println("Table LightProfiles Created!");
+  CreateTable(InstanceLightData,InstanceLightData_ColumnNames,InstanceLightData_ColumnFormat);
+  println("Table InstanceLightData Created!");
+  CreateTable(InstanceDroplistData,InstanceDroplistData_ColumnNames,InstanceDroplistData_ColumnFormat);
+  println("Table InstanceDroplistData Created!");
+  
   
   
   
   
 }
 
-public String[] CreateStringArrayFromList(StringList list)
-{
-  int size = list.size();
-  String[] rtn = new String[size];
-  
-  for(int i=0;i<size;i++)
-  {
-    rtn[i] = list.get(i);
-  }
-  
-  
-  
-  return rtn;
-  
-}
-
-
-public void CopyLightDataFromSQL()
-{
-  Lights_Product_IDs = new IntList();
-  Lights_Names = new StringList();
-  int cnt = 0;
-  db.query("SELECT * FROM Product JOIN Lights on Lights.Product_ID = Product.ID");
-  while(db.next())
-  {
-    Lights_Product_IDs.append(db.getInt("Product_ID"));
-    Lights_Names.append(db.getString("Name"));
-    cnt++;
-  }
-  Lights_NamesArray = CreateStringArrayFromList(Lights_Names);
-  if(Lights_Names.size()>0)
-  {
-    
-    lstSelectLight_MainWindow.setItems(Lights_NamesArray, 0);
-  }
-  if(Lights_Names.size()<=0)
-  {
-    Lights_NamesArray[0] = "Ready";
-    lstSelectLight_MainWindow.setItems(Lights_NamesArray, 0);
-  }
-  
-  
-}
 
 public void CreateTable(Table table, String[] ColumnNames, int[] ColumnFormat)
 {
   // Table must be initialized BEFORE running this setup.
+ 
+  if(ColumnNames.length!=ColumnFormat.length)
+  {
+    println("ERROR: ColumnNames and ColumnFormat are different sizes!!! ColumnNames = "+ColumnNames.length+" & ColumnFormat = "+ColumnFormat.length);
+    
+  }
+  else
+  {
   for(int i=0;i<ColumnNames.length;i++)
   {
     table.addColumn(ColumnNames[i],ColumnFormat[i]);
     println("Adding column "+ColumnNames[i]+".");
   }
-  
+  }
   
 }
 

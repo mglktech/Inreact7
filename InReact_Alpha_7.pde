@@ -64,9 +64,11 @@ public void setup(){
   Load_MainWindow();
   Load_winPatternConfig();
   Load_winColourConfig();
-  Lights = new Table();
+  ConstructTables();
+  
   SPPD = new String[14];
-  CreateTable(Lights,Lights_ColumnNames,Lights_ColumnFormat);
+  SCPD = new String[6];
+  
   FillFFT();
   SQL_Load();
   // Place your setup code here
@@ -80,10 +82,30 @@ public void draw(){
 }
 
 
-public void SaveProfile_Pattern()
+public void UpdateTableFromUI()
 {
+  
+  
+}
+
+
+
+public void SaveProfile(String ProfileType, String cmd, String data )
+{
+  if(ProfileType == "pattern")
+  {
+    
+  if(cmd == "exist")
+  {
+    
   // SPPD[0] is reserved.
   SPPD[1] = lstPatternProfile_PatternConfig.getSelectedText();
+  }
+  if(cmd == "new")
+  {
+    SPPD[1] = data;
+  }
+  
   println("Saving profile "+lstPatternProfile_PatternConfig.getSelectedText());
   db.query("SELECT * FROM PatternType WHERE Name = '"+lstPattern_PatternConfig.getSelectedText()+"'");
   SPPD[2] = str(db.getInt("ID"));
@@ -111,11 +133,39 @@ public void SaveProfile_Pattern()
   db.execute("UPDATE `PatternProfiles` SET Pattern_ID ="+SPPD[2]+",Bands_Min = "+SPPD[3]+",Bands_Amount = "+SPPD[4]+", MulBright = "+SPPD[5]+",MulColour = "+SPPD[6]+", LowPass = "+SPPD[7]+", GammaVal = "+SPPD[8]+", MaxXVal = "+SPPD[9]+", MaxYVal = "+SPPD[10]+", DecayValA = "+SPPD[11]+", DecayValB = "+SPPD[12]+", DecayValSplit = "+SPPD[13]+" WHERE Name='"+SPPD[1]+"';");
   println("Executed UPDATE");
   }
+  
+  }
+  if(ProfileType == "colour")
+  {
+    if(cmd == "exist")
+    {
+      SCPD[1] = lstColourProfile_ColourConfig.getSelectedText();
+    }
+    if(cmd == "new")
+    {
+      SCPD[1] = data;
+    }
+    
+    db.query("SELECT * FROM ColourType WHERE Name = '"+lstColour_ColourConfig.getSelectedText()+"'"); 
+    SCPD[2] = str(db.getInt("ID"));
+    //SCPD[3] = str(HO);
+    //SCPD[4] = str(SA);
+    println("Attempting write to DB...");
+    db.query("SELECT Count(*) AS count from ColourProfiles where ColourProfiles.Name = '"+SCPD[1]+"';");
+    if(db.getInt("count") == 0)
+    {
+      db.execute("INSERT INTO 'ColourProfiles'('Name','Colour_ID','DataA','DataB') VALUES ('"+SCPD[1]+"',"+SCPD[2]+","+SCPD[3]+","+SCPD[4]+");");
+      println("Executed Colour INSERT");
+    }
+    else if(db.getInt("count") == 1)
+    {
+      db.execute("UPDATE 'ColourProfiles' SET Colour_ID = "+SCPD[2]+", DataA = "+SCPD[3]+", DataB = "+SCPD[4]+" WHERE Name = '"+SCPD[1]+"';");
+      println("Executed Colour UPDATE");
+    }
+  }
+    
  
-    
   
-  
-    
   
 }
 public void LoadProfileToArray_Pattern()

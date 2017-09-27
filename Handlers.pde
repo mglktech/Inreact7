@@ -21,7 +21,12 @@ public void HandleButtonEvents(GButton source,GEvent event)
   if(source == btnSave_PatternConfig && event == GEvent.CLICKED)
   {
     println("Attempting to save Pattern...");
-    SaveProfile_Pattern();
+    SaveProfile("pattern","existing","");
+  }
+  if(source == btnSave_ColourConfig && event == GEvent.CLICKED)
+  {
+    println("Attempting to save Colour...");
+    SaveProfile("colour","existing","");
   }
   
   if(source == btnAddSettings_PatternConfig && event == GEvent.CLICKED)
@@ -53,7 +58,7 @@ public void HandleButtonEvents(GButton source,GEvent event)
     SQL_Get_Light_Details(1);
     SQL_Get_Light_Details(2);
     SQL_Get_Light_Details(3);
-    CopyLightDataFromSQL();
+    PullLightDataFromSQL();
   }
   if(source == btnProfileNew && event == GEvent.CLICKED && !winNewProfile_Loaded)
   {
@@ -67,14 +72,26 @@ public void HandleButtonEvents(GButton source,GEvent event)
     Load_WinNewProfile();
     winNewProfile_FromWin = "winPatternConfig";
   }
+  if(source == btnNewProfile_ColourConfig && event == GEvent.CLICKED)
+  {
+    Load_WinNewProfile();
+    winNewProfile_FromWin = "winColourConfig";
+    
+  }
   if(source == btnCreate_WinNewProfile && event == GEvent.CLICKED)
   {
     if(winNewProfile_FromWin == "winPatternConfig")
     {
-      SaveProfile_Pattern();
-      winNewProfile.close();
-      print("Database has been saved!");
+      SaveProfile("pattern","new",txtProfileName_WinNewProfile.getText());
+      
     }
+    if(winNewProfile_FromWin == "winColourConfig")
+    {
+      SaveProfile("colour","new",txtProfileName_WinNewProfile.getText());
+      
+    }
+    winNewProfile.close();
+    print("Database has been saved!");
     
   }
   if(source == btnSave_AddPatConfig && event == GEvent.CLICKED)
@@ -101,7 +118,7 @@ synchronized public void HandleMouseEvents(PApplet appc, GWinData windata, Mouse
   if(event.getAction() == MouseEvent.CLICK)
   {
     
-  println("MouseEvent");
+  //println("MouseEvent");
   UpdateBackground(appc);
   }
   
@@ -169,7 +186,7 @@ public void HandleDroplistEvents(GDropList source, GEvent event)
   }
   
     
-  print("event");
+  //print("event");
   
   
 }

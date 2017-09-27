@@ -56,6 +56,8 @@ public void UpdateUIElements(GWindow win)
     {
       int HO = int(knoHueOffset_ColourConfig.getValue());
       int SA = int(sliSat_ColourConfig.getValue());
+      SCPD[3] = str(HO);
+      SCPD[4] = str(SA);
      knoHueOffset_ColourConfig.setColorActive(HSBConvert(HO,SA,255,false));
      knoHueOffset_ColourConfig.setColorForeground(HSBConvert(HO,SA,255,false));
      //knoHueOffset_ColourConfig.setValueLabel(str(floor(knoHueOffset_ColourConfig.getValue())));
