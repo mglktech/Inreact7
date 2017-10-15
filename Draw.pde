@@ -40,11 +40,22 @@ public void UpdateUIElements(GWindow win)
   {
     if(win.mousePressed)
     {
-    SPPD[3] = str(floor(range.getArrayValue(0)));
-    SPPD[4] = str(floor(range.getArrayValue(1)));
+    
+    UpdateTableFromUI("PatConfigLive");
+    //float min = range.getArrayValue(0);
+    //float max = range.getArrayValue(1);
+    //float amnt = max - min + 1;
+    
+    //SetTableVal(InstanceLightData,lstSelectLight_MainWindow.getSelectedIndex(),Table.INT,new String[] {"Bands_Min",str(round(min))});
+    //SetTableVal(InstanceLightData,lstSelectLight_MainWindow.getSelectedIndex(),Table.INT,new String[] {"Bands_Amount",str(round(amnt))});
+   // int tabvalMin = GetTableInt(InstanceLightData,lstSelectLight_MainWindow.getSelectedIndex(),new String[] {"Bands_Min"});
+    //int tabvalAmount = GetTableInt(InstanceLightData,lstSelectLight_MainWindow.getSelectedIndex(),new String[] {"Bands_Amount"});
+    //println("tabvalmin: "+tabvalMin+" : TabValAmount: "+tabvalAmount+".");
     //println("Min: "+sliSelectBands_PatternConfig_Min+" Max: "+sliSelectBands_PatternConfig_Max+" Diff: "+sliSelectBands_PatternConfig_Diff);
     //println("Actual: "+range.getArrayValue(0)+":"+range.getArrayValue(1));
     }
+    
+    
     
     
     
@@ -89,6 +100,8 @@ public void DrawSpectrum(GWindow win)
   win.rect(10,35,400,255);
   // fill FFT test data
   win.fill(50,200,50);
+  int min = GetTableInt(InstanceLightData,lstSelectLight_MainWindow.getSelectedIndex(),new String[] {"Bands_Min"});
+  int amnt = GetTableInt(InstanceLightData,lstSelectLight_MainWindow.getSelectedIndex(),new String[] {"Bands_Amount"});
   for(int i=0;i<50;i++)
   {
     win.fill(100,100,100);
@@ -96,7 +109,7 @@ public void DrawSpectrum(GWindow win)
     {
       fftTestData[i] = 255;
     }
-    if(InRange(i,int(SPPD[3]),int(SPPD[4])))
+    if(InRange(i,min,min+amnt))
     {
       win.fill(50,200,50);
     }

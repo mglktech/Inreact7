@@ -190,6 +190,7 @@ synchronized public void SetTableVal(Table table, int tableRow, int format, Stri
   {
     row.setFloat(columnName,float(exData));
   }
+  println("Updated value in column "+columnName+" to "+exData+", table row "+tableRow+".");
   
 }
 

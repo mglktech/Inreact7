@@ -12,7 +12,7 @@ String[] SelectedCompatiblePatternNamesArray;
 
 
 
-String[] SPPD; // Selected PatternProfile Details
+//String[] SPPD; // Selected PatternProfile Details
 String[] SCPD; // Selected Colour Profile Details
 String[] SPD; // Selected Profile Details
 

@@ -21,12 +21,12 @@ public void HandleButtonEvents(GButton source,GEvent event)
   if(source == btnSave_PatternConfig && event == GEvent.CLICKED)
   {
     println("Attempting to save Pattern...");
-    SaveProfile("pattern","existing","");
+    //SaveProfile("pattern","existing","");
   }
   if(source == btnSave_ColourConfig && event == GEvent.CLICKED)
   {
     println("Attempting to save Colour...");
-    SaveProfile("colour","existing","");
+    //SaveProfile("colour","existing","");
   }
   
   if(source == btnAddSettings_PatternConfig && event == GEvent.CLICKED)
@@ -59,6 +59,8 @@ public void HandleButtonEvents(GButton source,GEvent event)
     SQL_Get_Light_Details(2);
     SQL_Get_Light_Details(3);
     PullLightDataFromSQL();
+    Load_winPatternConfig();
+    Load_winColourConfig();
   }
   if(source == btnProfileNew && event == GEvent.CLICKED && !winNewProfile_Loaded)
   {
@@ -82,12 +84,12 @@ public void HandleButtonEvents(GButton source,GEvent event)
   {
     if(winNewProfile_FromWin == "winPatternConfig")
     {
-      SaveProfile("pattern","new",txtProfileName_WinNewProfile.getText());
+      //SaveProfile("pattern","new",txtProfileName_WinNewProfile.getText());
       
     }
     if(winNewProfile_FromWin == "winColourConfig")
     {
-      SaveProfile("colour","new",txtProfileName_WinNewProfile.getText());
+      //SaveProfile("colour","new",txtProfileName_WinNewProfile.getText());
       
     }
     winNewProfile.close();
@@ -96,14 +98,7 @@ public void HandleButtonEvents(GButton source,GEvent event)
   }
   if(source == btnSave_AddPatConfig && event == GEvent.CLICKED)
   {
-    SPPD[8]  = txbGamma_PatternConfig.getText();
-    SPPD[9]  = txbMaxX_PatternConfig.getText();
-    SPPD[10] = txbMaxY_PatternConfig.getText();
-    SPPD[11] = txbDecayValA.getText();
-    SPPD[12] = txbDecayValB.getText();
-    SPPD[13] = txbDecayValSplit.getText();
-    
-    
+    UpdateTableFromUI("AddPatConfig");
     
     winAddPatConfig.close();
   }
@@ -179,8 +174,8 @@ public void HandleDroplistEvents(GDropList source, GEvent event)
     if(lstPatternProfile_PatternConfig.getSelectedText() != "loading...")
     {
       
-    LoadProfileToArray_Pattern();
-    UpdateUIFromArray_Pattern();
+    LoadProfileToTables("Pattern");
+    UpdateUIFromTable("NewPatProfileSelected");
     }
  
   }

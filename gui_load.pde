@@ -102,13 +102,15 @@ synchronized public void loadCp5UiElements_PatternConfig(GWindow win)
              .setCaptionLabel("")
              .setLabelVisible(false)
              // after the initialization we turn broadcast back on again
-             .setBroadcast(true)
+             //.setBroadcast(true)
              .setColorActive(color(150,150,150)) 
              .setColorForeground(color(100,100,100))
              .setColorBackground(color(50,50,50))
+             
+             
              ;
-   SPPD[3] = "20";
-   SPPD[4] = "40";
+   //SPPD[3] = "20";
+   //SPPD[4] = "40";
    sliLowPass_PatternConfig = cp5.addSlider("sliLowPass")
      .setPosition(415,35)
      .setSize(10,255)
@@ -171,16 +173,9 @@ synchronized public void loadCp5UiElements_PatternConfig(GWindow win)
   
 }
 
-void controlEvent(ControlEvent theControlEvent) {
-  
-  if(theControlEvent.isFrom("sliRangeController"))
-  {
-    
-    SPPD[3] = str(floor(theControlEvent.getController().getArrayValue(0)));
-    SPPD[4] = str(floor(theControlEvent.getController().getArrayValue(1) - theControlEvent.getController().getArrayValue(0)));
-  }
-  
-  
+void controlEvent( ControlEvent theEvent )
+{
+  print("SomethingHappened");
   
 }
 
@@ -287,7 +282,7 @@ public void Load_winPatternConfig() {
 }
 
 public void Load_WinAddPatConfig()
-{
+{  int Index = lstSelectLight_MainWindow.getSelectedIndex();
   winAddPatConfig = GWindow.getWindow(this, "Additional Settings", 0, 0, 240, 240, JAVA2D);
   winAddPatConfig.noLoop();
   winAddPatConfig.setActionOnClose(G4P.CLOSE_WINDOW);
@@ -337,12 +332,12 @@ public void Load_WinAddPatConfig()
   btnSave_AddPatConfig = new GButton(winAddPatConfig, 190, 210, 45, 20);
   btnSave_AddPatConfig.setText("Save");
   btnSave_AddPatConfig.addEventHandler(this, "HandleButtonEvents");
-  txbGamma_PatternConfig.setText(SPPD[8]);
-  txbMaxX_PatternConfig.setText(SPPD[9]);
-  txbMaxY_PatternConfig.setText(SPPD[10]);
-  txbDecayValA.setText(SPPD[11]);
-  txbDecayValB.setText(SPPD[12]);
-  txbDecayValSplit.setText(SPPD[13]);
+  txbGamma_PatternConfig.setText(GetTableStr(InstanceLightData,Index,new String[] {"GammaVal"}));
+  txbMaxX_PatternConfig.setText(GetTableStr(InstanceLightData,Index,new String[] {"MaxXVal"}));
+  txbMaxY_PatternConfig.setText(GetTableStr(InstanceLightData,Index,new String[] {"MaxYVal"}));
+  txbDecayValA.setText(GetTableStr(InstanceLightData,Index,new String[] {"DecayValA"}));
+  txbDecayValB.setText(GetTableStr(InstanceLightData,Index,new String[] {"DecayValB"}));
+  txbDecayValSplit.setText(GetTableStr(InstanceLightData,Index,new String[] {"DecayValSplit"}));
   
   winAddPatConfig.loop();
   
