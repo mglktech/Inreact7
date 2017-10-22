@@ -92,6 +92,8 @@ public void UpdateTableFromUI(String FromWindow)
     SetTableVal(InstanceLightData,Index,Table.FLOAT,new String[] {"MulBright",sliMul_PatternConfig.getValueXS()});
     SetTableVal(InstanceLightData,Index,Table.FLOAT,new String[] {"MulColour",sliMul_PatternConfig.getValueYS()});
     SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"LowPass",str(int(sliLowPass_PatternConfig.getValue()))});
+    SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"lstPattern_Index",str(lstPattern_PatternConfig.getSelectedIndex())});
+    SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"Pattern_ID",str(SelectedCompatiblePatternIDs.get(lstPattern_PatternConfig.getSelectedIndex()))});
     
     }
     if(FromWindow == "PatConfigLive")
@@ -112,6 +114,7 @@ public void UpdateTableFromUI(String FromWindow)
       SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"DecayValB",txbDecayValB.getText()});
       SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"DecayValSplit",txbDecayValSplit.getText()});
     }
+    
   
 }
 
@@ -140,21 +143,69 @@ public void UpdateUIFromTable(String Instance)
   lowpass.setValue(LowPass);
   sliMul_PatternConfig.setValueX(MulBright);
   sliMul_PatternConfig.setValueY(MulColour);
-  }
   
   
-}
-public void UpdateUIDropboxesFromTable(String Instance)
-{
-  if(Instance == "NewPatProfileSelected")
-  {
-    int Index = lstSelectLight_MainWindow.getSelectedIndex();
-    int DroplistIndex = GetTableInt(InstanceDroplistData,Index,new String[] {"lstPattern_Index"});
-    lstPattern_PatternConfig.setSelected(DroplistIndex);
+  
+  int DroplistIndex = GetTableInt(InstanceLightData,Index,new String[] {"lstPattern_Index"});
+  lstPattern_PatternConfig.setSelected(DroplistIndex);
   }
+  
   
 }
 
+
+
+public void SaveTableToDB(String ProfileType,String cmd,String data)
+{
+  String Name  = "";
+  int Index = lstSelectLight_MainWindow.getSelectedIndex();
+  
+  if(ProfileType == "pattern")
+  {
+    if(cmd == "new")
+    {
+      Name = data;
+    }
+    if(cmd == "exist")
+    {
+      Name =  GetTableStr(InstanceLightData,Index,new String[] {"ProfileName"});
+    }
+    
+    println("Saving pattern "+Name+"...");
+    db.query("SELECT Count(*) AS count from PatternProfiles where PatternProfiles.Name = '"+Name+"';");
+     String Pattern_ID = str(GetTableInt(InstanceLightData,Index,new String[] {"Pattern_ID"}));
+     String Bands_Min = str(GetTableInt(InstanceLightData,Index,new String[] {"Bands_Min"}));
+     String Bands_Amount = str(GetTableInt(InstanceLightData,Index,new String[] {"Bands_Amount"}));
+     String MulBright = str(GetTableFloat(InstanceLightData,Index,new String[] {"MulBright"}));
+     String MulColour = str(GetTableFloat(InstanceLightData,Index,new String[] {"MulColour"}));
+     String LowPass = str(GetTableInt(InstanceLightData,Index,new String[] {"LowPass"}));
+     String GammaVal = str(GetTableFloat(InstanceLightData,Index,new String[] {"GammaVal"}));
+     String MaxXVal = str(GetTableFloat(InstanceLightData,Index,new String[] {"MaxXVal"}));
+     String MaxYVal = str(GetTableFloat(InstanceLightData,Index,new String[] {"MaxYVal"}));
+     String DecayValA = str(GetTableInt(InstanceLightData,Index,new String[] {"DecayValA"}));
+     String DecayValB = str(GetTableInt(InstanceLightData,Index,new String[] {"DecayValB"}));
+     String DecayValSplit = str(GetTableInt(InstanceLightData,Index,new String[] {"DecayValSplit"}));
+    
+    if(db.getInt("count") == 0)
+    {
+     
+     db.execute("INSERT INTO`PatternProfiles`(`Name`,`Pattern_ID`,`Bands_Min`,`Bands_Amount`,`MulBright`,`MulColour`,`LowPass`,`GammaVal`,`MaxXVal`,`MaxYVal`,`DecayValA`,`DecayValB`,`DecayValSplit`)VALUES('"+Name+"',"+Pattern_ID+","+Bands_Min+","+Bands_Min+","+Bands_Amount+","+MulColour+","+LowPass+","+GammaVal+","+MaxXVal+","+MaxYVal+","+DecayValA+","+DecayValB+","+DecayValSplit+");");
+      println("Executed INSERT for "+Name);
+     
+     
+      
+    }
+    else if(db.getInt("count") != 0)
+    {
+      
+      db.execute("UPDATE `PatternProfiles` SET Pattern_ID="+Pattern_ID+",Bands_Min="+Bands_Min+",Bands_Amount="+Bands_Amount+",MulBright="+MulBright+",MulColour="+MulColour+",LowPass="+LowPass+",GammaVal="+GammaVal+",MaxXVal="+MaxXVal+",MaxYVal="+MaxYVal+",DecayValA="+DecayValA+",DecayValB="+DecayValB+",DecayValSplit="+DecayValSplit+" WHERE Name='"+Name+"';");
+      println("Executed UPDATE on "+Name);
+      
+    }
+    
+    
+  }
+}
 
 
 /*
@@ -251,6 +302,7 @@ public void LoadProfileToTables(String ProfileType)
    String id = lstPatternProfile_PatternConfig.getSelectedText();
    int Index = lstSelectLight_MainWindow.getSelectedIndex();
    db.query("SELECT * FROM PatternProfiles WHERE Name = '"+id+"';");
+   SetTableVal(InstanceLightData,Index,Table.STRING,new String[] {"ProfileName",db.getString("Name")});
    SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"Bands_Min",str(db.getInt("Bands_Min"))});
    SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"Bands_Amount",str(db.getInt("Bands_Amount"))});
    SetTableVal(InstanceLightData,Index,Table.FLOAT,new String[] {"MulBright",str(db.getFloat("MulBright"))});
@@ -264,25 +316,31 @@ public void LoadProfileToTables(String ProfileType)
    SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"DecayValSplit",str(db.getInt("DecayValSplit"))});
    // now to update pattern type dropbox:
    int PatternID = db.getInt("Pattern_ID");
-   db.query("SELECT * FROM PatternType WHERE ID = "+PatternID);
-   String PatternName = db.getString("Name");
-   
-   for(int i=0;i<SelectedCompatiblePatternNamesArray.length;i++)
+   SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"Pattern_ID",str(db.getInt("Pattern_ID"))});
+   int lstPattern_Index = 0;
+   for (int i=0;i<SelectedCompatiblePatternIDs.size();i++)
    {
-     if(SelectedCompatiblePatternNamesArray[i] == PatternName)
+     int Pid = SelectedCompatiblePatternIDs.get(i);
+     if(Pid == PatternID)
      {
+      lstPattern_Index = i;
+     }
+   }
+   SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"lstPatternProfile_Index",str(lstPatternProfile_PatternConfig.getSelectedIndex())});
+   SetTableVal(InstanceLightData,Index,Table.INT,new String[] {"lstPattern_Index",str(lstPattern_Index)});
+   
        //lstPattern_PatternConfig.setSelected(i);
        
-        SetTableVal(InstanceDroplistData,Index,Table.INT,new String[] {"lstPatternProfile_Index",str(lstPatternProfile_PatternConfig.getSelectedIndex())});
-        SetTableVal(InstanceDroplistData,Index,Table.INT,new String[] {"lstPattern_Index",str(i)});
+        
+        
        
      }
      
    }
  // colour profiles would work very similar to this, may incorperate it into one single function.
- }
+ 
   
-}
+
 /*
 public void LoadProfileToArray_Pattern()
 {

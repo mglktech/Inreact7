@@ -22,6 +22,8 @@ public void HandleButtonEvents(GButton source,GEvent event)
   {
     println("Attempting to save Pattern...");
     //SaveProfile("pattern","existing","");
+    SaveTableToDB("pattern","exist","");
+    
   }
   if(source == btnSave_ColourConfig && event == GEvent.CLICKED)
   {
@@ -85,6 +87,7 @@ public void HandleButtonEvents(GButton source,GEvent event)
     if(winNewProfile_FromWin == "winPatternConfig")
     {
       //SaveProfile("pattern","new",txtProfileName_WinNewProfile.getText());
+      SaveTableToDB("pattern","new",txtProfileName_WinNewProfile.getText());
       
     }
     if(winNewProfile_FromWin == "winColourConfig")

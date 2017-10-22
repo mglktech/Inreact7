@@ -4,7 +4,7 @@ Table Patterns;
 Table Lights;
 Table LightProfiles;
 Table InstanceLightData;
-Table InstanceDroplistData;
+
 
 
 String[] LightProfiles_ColumnNames = {"Light_Profile_ID","Light_ID","Pattern_Profile_ID","Colour_Profile_ID","ProfileName"};
@@ -13,11 +13,12 @@ int[]    LightProfiles_ColumnFormat = {Table.INT,Table.INT,Table.INT,Table.INT,T
 String[] Lights_ColumnNames = {"LightID","ProductID","ProductName"}; // Table of connected lights with relevant details for dropboxes
 int[] Lights_ColumnFormat = {Table.INT,Table.INT,Table.STRING};
 
-String[] InstanceLightData_ColumnNames = {"LightID","Product_ID","Bands_Min","Bands_Amount","MulBright","MulColour","LowPass","GammaVal","MaxXVal","MaxYVal","DecayValA","DecayValB","DecayValSplit","Colour_DataA","Colour_DataB","Colour_DataC","Colour_DataD"};
-int[]    InstanceLightData_ColumnFormat = {Table.INT,Table.INT,Table.INT,Table.INT,Table.FLOAT,Table.FLOAT,Table.INT,Table.FLOAT,Table.FLOAT,Table.FLOAT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT};
 
-String[] InstanceDroplistData_ColumnNames = {"LightID","lstSelectProfile_Index","lstPattern_Index","lstPatternProfile_Index","lstColourProfile_Index","lstColour_Index"};
-int[] InstanceDroplistData_ColumnFormat = {Table.INT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT};
+String[] InstanceLightData_ColumnNames = {"LightID","Product_ID","ProfileName","lstSelectLight_Index","lstPattern_Index","Pattern_ID","lstPatternProfile_Index","ColourProfileName","lstColourProfile_Index","Colour_ID","lstColour_Index","Bands_Min","Bands_Amount","MulBright","MulColour","LowPass","GammaVal","MaxXVal","MaxYVal","DecayValA","DecayValB","DecayValSplit","Colour_DataA","Colour_DataB","Colour_DataC","Colour_DataD"};
+int[]    InstanceLightData_ColumnFormat = {Table.INT,Table.INT,Table.STRING,Table.INT,Table.INT,Table.INT,Table.INT,Table.STRING,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT,Table.FLOAT,Table.FLOAT,Table.INT,Table.FLOAT,Table.FLOAT,Table.FLOAT,Table.INT,Table.INT,Table.INT,Table.FLOAT,Table.FLOAT,Table.FLOAT,Table.FLOAT};
+
+//String[] InstanceDroplistData_ColumnNames = {"LightID","lstSelectProfile_Index","lstPattern_Index","lstPatternProfile_Index","lstColourProfile_Index","lstColour_Index"};
+//int[] InstanceDroplistData_ColumnFormat = {Table.INT,Table.INT,Table.INT,Table.INT,Table.INT,Table.INT};
 
 /*public void AddBoolsRowData()
 {
@@ -37,15 +38,13 @@ public void ConstructTables()
   LightProfiles = new Table();
   Lights = new Table();
   InstanceLightData = new Table();
-  InstanceDroplistData = new Table();
+  
   CreateTable(Lights,Lights_ColumnNames,Lights_ColumnFormat);
   println("Table Lights Created!");
   CreateTable(LightProfiles,LightProfiles_ColumnNames,LightProfiles_ColumnFormat);
   println("Table LightProfiles Created!");
   CreateTable(InstanceLightData,InstanceLightData_ColumnNames,InstanceLightData_ColumnFormat);
   println("Table InstanceLightData Created!");
-  CreateTable(InstanceDroplistData,InstanceDroplistData_ColumnNames,InstanceDroplistData_ColumnFormat);
-  println("Table InstanceDroplistData Created!");
   
   
   
